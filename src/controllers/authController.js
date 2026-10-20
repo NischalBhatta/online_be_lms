@@ -1,12 +1,26 @@
-export const insertNewUser = (req, res, next) => {
+import { createNewUser } from "../models/user/userModel.js";
+import { hashPassword } from "../utils/bcrypt.js";
+
+export const insertNewUser = async (req, res, next) => {
   try {
     //to do signup process
-    createNewUser();
+    //recieve user data
+    console.log(req.body);
+    //encrypt password
+    const { password } = req.body;
+    req.body.password = hashPassword(password);
 
-    res.json({
-      status: "success",
-      message: "TODO Signup",
-    });
+    //insert user in db
+    const user = await createNewUser(req.body);
+
+    //create unique activation link and send to their email
+    id(user?._id);
+    {
+      res.json({
+        status: "success",
+        message: "TODO Signup",
+      });
+    }
   } catch (error) {
     console.log(error);
   }
