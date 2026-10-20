@@ -1,6 +1,11 @@
-@rootUrl = http://localhost:8000/
+@rootUrl = http://localhost:8000
 
 #API List
 
-## Check Server status
-GET{{rootUrl}}
+### Check Server status
+GET {{rootUrl}}
+
+## Authentication API
+
+### Check Server status
+POST {{rootUrl}}/api/v1/auth/register

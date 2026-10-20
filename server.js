@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8000;
 
 import cors from "cors";
 import morgan from "morgan";
-import { dbConnect } from "./config/dbConfig.js";
+import { dbConnect } from "./src/config/dbConfig.js";
 
 //DB Connection
 dbConnect()
@@ -22,6 +22,11 @@ dbConnect()
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+
+//API Endpoints
+import authRoute from "./src/routes/authRoute.js";
+
+app.use("/api/v1/auth", authRoute);
 
 //Server status
 app.get("/", (req, res, next) => {
