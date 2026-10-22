@@ -5,7 +5,7 @@ export const insertNewUser = async (req, res, next) => {
   try {
     //to do signup process
     //recieve user data
-    console.log(req.body);
+    // console.log(req.body);
     //encrypt password
     const { password } = req.body;
     req.body.password = hashPassword(password);
@@ -13,8 +13,7 @@ export const insertNewUser = async (req, res, next) => {
     //insert user in db
     const user = await createNewUser(req.body);
 
-    //create unique activation link and send to their email
-    id(user?._id);
+    if (user?._id) //create unique activation link and send to their email
     {
       res.json({
         status: "success",
@@ -22,6 +21,11 @@ export const insertNewUser = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    if (error.message.includes("E11000 duplicate key error collection")) {
+      error.message =
+        "The email already exist for another user.Please try another email";
+      error.statusCode = 200;
+    }
+    next(error);
   }
 };

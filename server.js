@@ -25,6 +25,7 @@ app.use(express.json());
 
 //API Endpoints
 import authRoute from "./src/routes/authRoute.js";
+import { errorHandler } from "./src/middleware/errorHandler.js";
 
 app.use("/api/v1/auth", authRoute);
 
@@ -34,3 +35,5 @@ app.get("/", (req, res, next) => {
     message: "Server is Live",
   });
 });
+
+app.use(errorHandler);
