@@ -1,3 +1,4 @@
+import { responseClient } from "../middleware/responseClient.js";
 import { createNewUser } from "../models/user/userModel.js";
 import { hashPassword } from "../utils/bcrypt.js";
 
@@ -15,16 +16,16 @@ export const insertNewUser = async (req, res, next) => {
 
     if (user?._id) //create unique activation link and send to their email
     {
-      res.json({
-        status: "success",
-        message: "TODO Signup",
-      });
+      const message =
+        "We have sent you an email with activation link, please check your email and follow steps to activate your account";
+      return responseClient({ req, res, message });
     }
+    throw new Error("Unable to create an account,try again later");
   } catch (error) {
     if (error.message.includes("E11000 duplicate key error collection")) {
       error.message =
         "The email already exist for another user.Please try another email";
-      error.statusCode = 200;
+      error.statusCode = 400;
     }
     next(error);
   }

@@ -26,14 +26,14 @@ app.use(express.json());
 //API Endpoints
 import authRoute from "./src/routes/authRoute.js";
 import { errorHandler } from "./src/middleware/errorHandler.js";
+import { responseClient } from "./src/middleware/responseClient.js";
 
 app.use("/api/v1/auth", authRoute);
 
 //Server status
 app.get("/", (req, res, next) => {
-  res.json({
-    message: "Server is Live",
-  });
+  const message = "Server is Live";
+  responseClient({ req, res, message });
 });
 
 app.use(errorHandler);
