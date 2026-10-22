@@ -1,6 +1,8 @@
 import { responseClient } from "../middleware/responseClient.js";
+import { createNewSession } from "../models/session/SessionModel.js";
 import { createNewUser } from "../models/user/userModel.js";
 import { hashPassword } from "../utils/bcrypt.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const insertNewUser = async (req, res, next) => {
   try {
@@ -16,9 +18,23 @@ export const insertNewUser = async (req, res, next) => {
 
     if (user?._id) //create unique activation link and send to their email
     {
-      const message =
-        "We have sent you an email with activation link, please check your email and follow steps to activate your account";
-      return responseClient({ req, res, message });
+      const session = await createNewSession({
+        token: uuidv4(),
+        association: user.email,
+      });
+      if (session?._id) {
+        const url =
+          "http://localhost:5371?sessionId=" +
+          session._id +
+          "&t=" +
+          session.token;
+
+        //send this url to their email
+        console.log(url);
+        const message =
+          "We have sent you an email with activation link, please check your email and follow steps to activate your account";
+        return responseClient({ req, res, message });
+      }
     }
     throw new Error("Unable to create an account,try again later");
   } catch (error) {

@@ -14,7 +14,7 @@ Content-Type: application/json
 {
     "fName": "Nischal",
     "lName": "Bhatta",
-    "email": "a@a.com",
+    "email": "d1@a.com",
     "phone": "41221345",
     "password": "1234",
     "role": "admin",
