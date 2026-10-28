@@ -14,9 +14,19 @@ Content-Type: application/json
 {
     "fName": "Nischal",
     "lName": "Bhatta",
-    "email": "e2@a.com",
+    "email": "b@a.com",
     "phone": "41221345",
     "password": "1234",
     "role": "admin",
     "refreshJWT": "string"
 }
+
+### POST to activate user
+POST {{rootUrl}}/api/v1/auth/activate-user
+Content-Type: application/json
+
+{
+   "sessionId":"6ae1b2da4a7990b454b19e9b",
+   "t":"256675ad-f212-43cc-9842-d5d689e88760"
+}
+sessionId=6ae1b2da4a7990b454b19e9b&t=256675ad-f212-43cc-9842-d5d689e88760
