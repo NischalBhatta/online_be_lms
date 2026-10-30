@@ -3,7 +3,7 @@ import {
   createNewSession,
   deleteSession,
 } from "../models/session/SessionModel.js";
-import { createNewUser, updateUser } from "../models/user/userModel.js";
+import { createNewUser, updateUser } from "../models/user/UserModel.js";
 import {
   userActivationUrlEmail,
   userActivatedNotificationEmail,
@@ -83,7 +83,7 @@ export const activateUser = async (req, res, next) => {
       }
       const message = "Invalid link or token expired!";
       const statusCode = 400;
-      return responseClient({ req, res, message, statusCode });
+      return responseClient({ req, res, message, statusCoder });
     }
   } catch (error) {
     next(error);
