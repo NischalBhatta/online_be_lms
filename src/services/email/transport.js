@@ -22,7 +22,7 @@ export const sendMail = async (mail) => {
       to: mail.to,
       subject: mail.subject,
       html: mail.html,
-      test: main.text,
+      test: mail.text,
     });
     if (error) throw new Error(error.message);
     return data.id;
