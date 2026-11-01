@@ -12,6 +12,7 @@ import { hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 
 export const insertNewUser = async (req, res, next) => {
+  console.log("ROOT_URL =", process.env.ROOT_URL);
   try {
     //to do signup process
     //recieve user data
