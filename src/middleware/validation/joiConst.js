@@ -10,7 +10,8 @@ export const EMAIL = Joi.string()
   })
   .min(5);
 export const EMAILREQ = EMAIL.required();
-export const PASSWORD = Joi.string().min(5).required();
+export const PASSWORD = Joi.string().min(5);
+export const PASSWORDREQ = Joi.string().min(5).required();
 export const PHONE = Joi.number();
 export const PHONEREQ = PHONE.required();
 

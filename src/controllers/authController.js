@@ -3,12 +3,16 @@ import {
   createNewSession,
   deleteSession,
 } from "../models/session/SessionModel.js";
-import { createNewUser, updateUser } from "../models/user/userModel.js";
+import {
+  createNewUser,
+  getUserByEmail,
+  updateUser,
+} from "../models/user/userModel.js";
 import {
   userActivationUrlEmail,
   userActivatedNotificationEmail,
 } from "../services/email/emailService.js";
-import { hashPassword } from "../utils/bcrypt.js";
+import { comparePassword, hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 
 export const insertNewUser = async (req, res, next) => {
@@ -86,6 +90,39 @@ export const activateUser = async (req, res, next) => {
       const statusCode = 400;
       return responseClient({ req, res, message, statusCode });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+export const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    console.log(email, password);
+
+    //get user by email
+    const user = getUserByEmail(email);
+    if (user?._id) {
+      console.log(user);
+      //compare password
+      const isPassMatched = comparePassword(password, user.password);
+      if (isPassMatched) {
+        console.log("User Authenticated successfully");
+        //create jwts
+        const jwt = {};
+
+        //response jwts
+        return responseClient({
+          req,
+          res,
+          message: "Login Successfull!",
+          payload: jwt,
+        });
+      }
+    }
+
+    const message = "Invalid Login Credentials!";
+    const statusCode = 400;
+    responseClient({ req, res, message, statusCode });
   } catch (error) {
     next(error);
   }

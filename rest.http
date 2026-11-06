@@ -16,7 +16,7 @@ Content-Type: application/json
     "lName": "Bhatta",
     "email": "b33@a.com",
     "phone": "41221345",
-    "password": "1234"
+    "password": "12345"
 }
 
 ### POST to activate user
@@ -26,4 +26,12 @@ Content-Type: application/json
 {
    "sessionId":"6ae1b2da4a7990b454b19e9b",
    "t":"256675ad-f212-43cc-9842-d5d689e88760"
+}
+### Login User
+POST {{rootUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+   "email": "b@g.com",
+   "password": "Asdf1@"
 }

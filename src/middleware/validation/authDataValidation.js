@@ -5,7 +5,7 @@ import {
   EMAILREQ,
   FNAMEREQ,
   LNAMEREQ,
-  PASSWORD,
+  PASSWORDREQ,
   PHONEREQ,
   SESSIONREQ,
   TOKENREQ,
@@ -17,7 +17,7 @@ export const newUserDataValidation = (req, res, next) => {
     lName: LNAMEREQ,
     email: EMAILREQ,
     phone: PHONEREQ,
-    password: PASSWORD,
+    password: PASSWORDREQ,
   };
 
   validateData({ req, res, next, obj });
@@ -37,6 +37,25 @@ export const userActivationDataValidation = (req, res, next) => {
   const obj = {
     sessionId: SESSIONREQ,
     t: TOKENREQ,
+  };
+
+  validateData({ req, res, next, obj });
+};
+
+export const loginDataValidation = (req, res, next) => {
+  //         {
+  //     "fName": "Nischal",
+  //     "lName": "Bhatta",
+  //     "email": "b@a.com",
+  //     "phone": "41221345",
+  //     "password": "1234",
+  //     "role": "admin",
+  //     "refreshJWT": "string"
+  // }
+  //create schema or rules
+  const obj = {
+    email: EMAILREQ,
+    password: PASSWORDREQ,
   };
 
   validateData({ req, res, next, obj });
