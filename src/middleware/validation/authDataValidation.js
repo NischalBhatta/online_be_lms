@@ -18,21 +18,13 @@ export const newUserDataValidation = (req, res, next) => {
     email: EMAILREQ,
     phone: PHONEREQ,
     password: PASSWORDREQ,
+    confirmPassword: PASSWORDREQ,
   };
 
   validateData({ req, res, next, obj });
 };
 
 export const userActivationDataValidation = (req, res, next) => {
-  //         {
-  //     "fName": "Nischal",
-  //     "lName": "Bhatta",
-  //     "email": "b@a.com",
-  //     "phone": "41221345",
-  //     "password": "1234",
-  //     "role": "admin",
-  //     "refreshJWT": "string"
-  // }
   //create schema or rules
   const obj = {
     sessionId: SESSIONREQ,

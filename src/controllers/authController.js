@@ -14,6 +14,7 @@ import {
 } from "../services/email/emailService.js";
 import { comparePassword, hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
+import { getJwts } from "../utils/jwt.js";
 
 export const insertNewUser = async (req, res, next) => {
   console.log("ROOT_URL =", process.env.ROOT_URL);
@@ -100,15 +101,16 @@ export const loginUser = async (req, res, next) => {
     console.log(email, password);
 
     //get user by email
-    const user = getUserByEmail(email);
+    const user = await getUserByEmail(email);
+    console.log(user);
     if (user?._id) {
-      console.log(user);
       //compare password
+      console.log(user._id);
       const isPassMatched = comparePassword(password, user.password);
       if (isPassMatched) {
         console.log("User Authenticated successfully");
         //create jwts
-        const jwt = {};
+        const jwt = await getJwts(email);
 
         //response jwts
         return responseClient({
