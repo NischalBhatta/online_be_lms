@@ -22,6 +22,16 @@ export const createAccessJWT = async (email) => {
 
 //decode accessJWT
 
+export const verifyAccessJWT = (token) => {
+  try {
+    console.log(token);
+    return jwt.verify(token, process.env.ACCESSJWT_SECRET);
+  } catch (error) {
+    console.log(error);
+    return error.message;
+  }
+};
+
 //generate refreshJWT
 
 export const createRefreshJWT = async (email) => {
