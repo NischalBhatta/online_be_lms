@@ -1,13 +1,14 @@
 import { getSession } from "../../models/session/SessionModel.js";
 import { getUserByEmail } from "../../models/user/userModel.js";
 import { verifyAccessJWT } from "../../utils/jwt.js";
+import { responseClient } from "../responseClient.js";
 
 export const userAuthMiddleware = async (req, res, next) => {
   //get accessJWT
   const { authorization } = req.headers;
   let message = "Unauthorized";
   console.log(authorization);
-  if (authorization && authorization.startsWith("Bearer ")) {
+  if (authorization && authorization.startsWith("bearer ")) {
     const token = authorization.split(" ")[1];
 
     //check if valid or not
