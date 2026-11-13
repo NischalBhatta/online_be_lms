@@ -139,6 +139,7 @@ export const logoutUser = async (req, res, next) => {
     await updateUser(email, { refreshJWT: "" });
     //remove the accessJWT from the sessio table
     await deleteManySessions({ association: email });
+    responseClient({ req, res, message: "you are logged out!" });
   } catch (error) {
     console.log(error);
   }
