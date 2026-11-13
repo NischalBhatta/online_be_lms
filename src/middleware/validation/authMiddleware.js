@@ -1,6 +1,10 @@
 import { getSession } from "../../models/session/SessionModel.js";
-import { getUserByEmail } from "../../models/user/userModel.js";
-import { verifyAccessJWT } from "../../utils/jwt.js";
+import { getOneUser, getUserByEmail } from "../../models/user/userModel.js";
+import {
+  createAccessJWT,
+  verifyAccessJWT,
+  verifyRefreshJWT,
+} from "../../utils/jwt.js";
 import { responseClient } from "../responseClient.js";
 
 export const userAuthMiddleware = async (req, res, next) => {
@@ -28,6 +32,46 @@ export const userAuthMiddleware = async (req, res, next) => {
       }
     }
     message = decoded === "jwt expired" ? decoded : "Unauthorized";
+  }
+  responseClient({ req, res, message: "Unauthorized", statusCode: 400 });
+};
+
+export const renewAccessJWTMiddleware = async (req, res, next) => {
+  //get accessJWT
+  const { authorization } = req.headers;
+  let message = "Unauthorized";
+  console.log(authorization);
+  if (authorization && authorization.startsWith("bearer ")) {
+    const token = authorization.split(" ")[1];
+
+    //check if valid or not
+    const decoded = verifyRefreshJWT(token);
+    console.log("decoded:", decoded);
+    const byEmail = await getOneUser({ email: decoded.email });
+    console.log(
+      "user by email:",
+      byEmail?.email,
+      "stored refreshJWT:",
+      byEmail?.refreshJWT,
+    );
+    if (decoded?.email) {
+      const user = await getOneUser({
+        email: decoded.email,
+        refreshJWT: token,
+      });
+      //check if exist in session tables
+      if (user?._id) {
+        //create new accessJWT
+        const token = await createAccessJWT(decoded.email);
+        //return accessJWT
+        return responseClient({
+          req,
+          res,
+          message: "Here is the accessJWT",
+          payload: token,
+        });
+      }
+    }
   }
   responseClient({ req, res, message: "Unauthorized", statusCode: 400 });
 };

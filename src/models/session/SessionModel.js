@@ -7,6 +7,9 @@ export const createNewSession = (userObj) => {
 export const deleteSession = (filter) => {
   return SessionSchema.findOneAndDelete(filter);
 };
+export const deleteManySessions = (filter) => {
+  return SessionSchema.deleteMany(filter);
+};
 export const getSession = (filter) => {
   return SessionSchema.findOne(filter);
 };

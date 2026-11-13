@@ -6,7 +6,7 @@ import { updateUser } from "../models/user/userModel.js";
 export const createAccessJWT = async (email) => {
   //create
   const token = jwt.sign({ email }, process.env.ACCESSJWT_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "1m",
   });
 
   //store
@@ -37,7 +37,7 @@ export const verifyAccessJWT = (token) => {
 export const createRefreshJWT = async (email) => {
   //create
   const refreshJWT = jwt.sign({ email }, process.env.REFRESHJWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "2min",
   });
 
   //store
@@ -46,6 +46,15 @@ export const createRefreshJWT = async (email) => {
 };
 
 //decode refreshJWT
+export const verifyRefreshJWT = (token) => {
+  try {
+    console.log(token);
+    return jwt.verify(token, process.env.REFRESHJWT_SECRET);
+  } catch (error) {
+    console.log(error);
+    return error.message;
+  }
+};
 
 export const getJwts = async (email) => {
   return {
