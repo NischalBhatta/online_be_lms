@@ -8,7 +8,7 @@ import {
   createNewUser,
   getUserByEmail,
   updateUser,
-} from "../models/user/userModel.js";
+} from "../models/user/UserModel.js";
 import {
   userActivationUrlEmail,
   userActivatedNotificationEmail,
@@ -136,11 +136,11 @@ export const logoutUser = async (req, res, next) => {
     //get the token
     const { email } = req.userInfo;
     //update refreshJWT to ""
-    await updateUser(email, { refreshJWT: "" });
+    await updateUser({ email }, { refreshJWT: "" });
     //remove the accessJWT from the sessio table
     await deleteManySessions({ association: email });
     responseClient({ req, res, message: "you are logged out!" });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };

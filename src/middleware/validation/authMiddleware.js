@@ -1,5 +1,5 @@
 import { getSession } from "../../models/session/SessionModel.js";
-import { getOneUser, getUserByEmail } from "../../models/user/userModel.js";
+import { getOneUser, getUserByEmail } from "../../models/user/UserModel.js";
 import {
   createAccessJWT,
   verifyAccessJWT,
@@ -21,7 +21,7 @@ export const userAuthMiddleware = async (req, res, next) => {
     if (decoded.email) {
       const tokenSession = await getSession({ token });
       //check if exist in session tables
-      if (tokenSession._id) {
+      if (tokenSession?._id) {
         //get the user by email
         const user = await getUserByEmail(decoded.email);
         if (user?.id && user.status === "active") {
@@ -33,7 +33,7 @@ export const userAuthMiddleware = async (req, res, next) => {
     }
     message = decoded === "jwt expired" ? decoded : "Unauthorized";
   }
-  responseClient({ req, res, message: "Unauthorized", statusCode: 400 });
+  responseClient({ req, res, message, statusCode: 401 });
 };
 
 export const renewAccessJWTMiddleware = async (req, res, next) => {
@@ -73,5 +73,5 @@ export const renewAccessJWTMiddleware = async (req, res, next) => {
       }
     }
   }
-  responseClient({ req, res, message: "Unauthorized", statusCode: 400 });
+  responseClient({ req, res, message: "Unauthorized", statusCode: 401 });
 };

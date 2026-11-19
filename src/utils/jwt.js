@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { createNewSession } from "../models/session/SessionModel.js";
-import { updateUser } from "../models/user/userModel.js";
+import { updateUser } from "../models/user/UserModel.js";
 
 //generate accessJWT
 export const createAccessJWT = async (email) => {
