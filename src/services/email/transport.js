@@ -18,13 +18,22 @@ const smtpTransporter = () =>
 export const sendMail = async (mail) => {
   if (isProd) {
     const { data, error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM,
+      //no verified domain yet → Resend's shared test sender (free tier: only delivers to the Resend account's own email)
+      from: process.env.EMAIL_FROM || "Local Library <onboarding@resend.dev>",
       to: mail.to,
       subject: mail.subject,
       html: mail.html,
       text: mail.text,
     });
-    if (error) throw new Error(error.message);
+    if (error) {
+      //log the provider's real reason (e.g. unverified domain) but don't expose it to users
+      console.error("Resend email failed:", error.message);
+      const err = new Error(
+        "Unable to send email right now. Please try again later.",
+      );
+      err.statusCode = 503;
+      throw err;
+    }
     return data.id;
   }
 
