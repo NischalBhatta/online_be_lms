@@ -24,7 +24,15 @@ export const sendMail = async (mail) => {
       html: mail.html,
       text: mail.text,
     });
-    if (error) throw new Error(error.message);
+    if (error) {
+      //log the provider's real reason (e.g. unverified domain) but don't expose it to users
+      console.error("Resend email failed:", error.message);
+      const err = new Error(
+        "Unable to send email right now. Please try again later.",
+      );
+      err.statusCode = 503;
+      throw err;
+    }
     return data.id;
   }
 
