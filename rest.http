@@ -35,6 +35,23 @@ Content-Type: application/json
    "email": "1@7.com",
    "password": "Asdf1@"
 }
+### Request password reset OTP
+POST {{rootUrl}}/api/v1/auth/otp
+Content-Type: application/json
+
+{
+   "email": "1@7.com"
+}
+### Reset password with OTP
+POST {{rootUrl}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+   "email": "1@7.com",
+   "otp": "123456",
+   "password": "Asdf1@new",
+   "confirmPassword": "Asdf1@new"
+}
 ### Get User Profile
 GET {{rootUrl}}/api/v1/users/profile
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFANy5jb20iLCJpYXQiOjE3OTQ0NTUxNjYsImV4cCI6MTc5NzA0NzE2Nn0.PIarMZW_9D6xr8KkluViKSh0V9S3WrvbaX9fMHkDubk
