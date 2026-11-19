@@ -18,7 +18,8 @@ const smtpTransporter = () =>
 export const sendMail = async (mail) => {
   if (isProd) {
     const { data, error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM,
+      //no verified domain yet → Resend's shared test sender (free tier: only delivers to the Resend account's own email)
+      from: process.env.EMAIL_FROM || "Local Library <onboarding@resend.dev>",
       to: mail.to,
       subject: mail.subject,
       html: mail.html,
