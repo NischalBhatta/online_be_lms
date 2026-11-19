@@ -30,8 +30,10 @@ app.use(express.json());
 import authRoute from "./src/routes/authRoute.js";
 import { errorHandler } from "./src/middleware/errorHandler.js";
 import { responseClient } from "./src/middleware/responseClient.js";
+import userRoute from "./src/routes/userRoute.js";
 
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/users", userRoute);
 
 //Server status
 app.get("/", (req, res, next) => {

@@ -22,12 +22,22 @@ export const sendMail = async (mail) => {
       to: mail.to,
       subject: mail.subject,
       html: mail.html,
-      test: mail.text,
+      text: mail.text,
     });
     if (error) throw new Error(error.message);
     return data.id;
   }
 
+  //Dev: print the email in the terminal so OTPs/links are visible even for dummy addresses
+  console.log(
+    `\n📧 [DEV EMAIL] To: ${mail.to}\n   Subject: ${mail.subject}\n   ${mail.text}`,
+  );
+
   const info = await smtpTransporter().sendMail(mail);
+
+  //Ethereal only: link to view the captured email in the browser (false for other SMTP hosts)
+  const previewUrl = nodemailer.getTestMessageUrl(info);
+  previewUrl && console.log(`   Preview: ${previewUrl}\n`);
+
   return info.messageId;
 };

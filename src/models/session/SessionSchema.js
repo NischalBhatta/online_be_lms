@@ -9,15 +9,21 @@ const SessionSchema = new mongoose.Schema(
     association: {
       type: String,
     },
+    // "auth" for activation/access-token sessions, "otp" for password reset OTPs
+    type: {
+      type: String,
+      default: "auth",
+    },
     expire: {
       type: Date,
       required: true,
-      default: new Date(Date.now() + 36000000000), //
+      // function so the default is computed per document, not once at server start
+      default: () => new Date(Date.now() + 36000000000),
       expires: 0,
     },
   },
   {
-    timestamp: true,
+    timestamps: true,
   },
 );
 export default mongoose.model("Session", SessionSchema);
