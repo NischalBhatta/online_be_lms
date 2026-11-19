@@ -16,7 +16,7 @@ Content-Type: application/json
     "lName": "Bhatta",
     "email": "b33@a.com",
     "phone": "41221345",
-    "password": "1234"
+    "password": "12345"
 }
 
 ### POST to activate user
@@ -27,3 +27,34 @@ Content-Type: application/json
    "sessionId":"6ae1b2da4a7990b454b19e9b",
    "t":"256675ad-f212-43cc-9842-d5d689e88760"
 }
+### Login User
+POST {{rootUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+   "email": "1@7.com",
+   "password": "Asdf1@"
+}
+### Request password reset OTP
+POST {{rootUrl}}/api/v1/auth/otp
+Content-Type: application/json
+
+{
+   "email": "1@7.com"
+}
+### Reset password with OTP
+POST {{rootUrl}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+   "email": "1@7.com",
+   "otp": "123456",
+   "password": "Asdf1@new",
+   "confirmPassword": "Asdf1@new"
+}
+### Get User Profile
+GET {{rootUrl}}/api/v1/users/profile
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFANy5jb20iLCJpYXQiOjE3OTQ0NTUxNjYsImV4cCI6MTc5NzA0NzE2Nn0.PIarMZW_9D6xr8KkluViKSh0V9S3WrvbaX9fMHkDubk
+### renew JWT
+GET {{rootUrl}}/api/v1/auth/renew-jwt
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFANy5jb20iLCJpYXQiOjE3OTQ0NTUxNjYsImV4cCI6MTc5NzA0NzE2Nn0.PIarMZW_9D6xr8KkluViKSh0V9S3WrvbaX9fMHkDubk

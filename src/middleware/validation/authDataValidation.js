@@ -5,7 +5,8 @@ import {
   EMAILREQ,
   FNAMEREQ,
   LNAMEREQ,
-  PASSWORD,
+  OTPREQ,
+  PASSWORDREQ,
   PHONEREQ,
   SESSIONREQ,
   TOKENREQ,
@@ -17,13 +18,24 @@ export const newUserDataValidation = (req, res, next) => {
     lName: LNAMEREQ,
     email: EMAILREQ,
     phone: PHONEREQ,
-    password: PASSWORD,
+    password: PASSWORDREQ,
+    confirmPassword: PASSWORDREQ,
   };
 
   validateData({ req, res, next, obj });
 };
 
 export const userActivationDataValidation = (req, res, next) => {
+  //create schema or rules
+  const obj = {
+    sessionId: SESSIONREQ,
+    t: TOKENREQ,
+  };
+
+  validateData({ req, res, next, obj });
+};
+
+export const loginDataValidation = (req, res, next) => {
   //         {
   //     "fName": "Nischal",
   //     "lName": "Bhatta",
@@ -35,8 +47,27 @@ export const userActivationDataValidation = (req, res, next) => {
   // }
   //create schema or rules
   const obj = {
-    sessionId: SESSIONREQ,
-    t: TOKENREQ,
+    email: EMAILREQ,
+    password: PASSWORDREQ,
+  };
+
+  validateData({ req, res, next, obj });
+};
+
+export const otpRequestDataValidation = (req, res, next) => {
+  const obj = {
+    email: EMAILREQ,
+  };
+
+  validateData({ req, res, next, obj });
+};
+
+export const resetPasswordDataValidation = (req, res, next) => {
+  const obj = {
+    email: EMAILREQ,
+    otp: OTPREQ,
+    password: PASSWORDREQ,
+    confirmPassword: PASSWORDREQ,
   };
 
   validateData({ req, res, next, obj });

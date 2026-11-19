@@ -10,7 +10,8 @@ export const EMAIL = Joi.string()
   })
   .min(5);
 export const EMAILREQ = EMAIL.required();
-export const PASSWORD = Joi.string().min(5).required();
+export const PASSWORD = Joi.string().min(5);
+export const PASSWORDREQ = Joi.string().min(5).required();
 export const PHONE = Joi.number();
 export const PHONEREQ = PHONE.required();
 
@@ -18,3 +19,8 @@ export const SESSION = Joi.string().min(10).max(30);
 export const SESSIONREQ = SESSION.required();
 export const TOKEN = Joi.string().min(10);
 export const TOKENREQ = TOKEN.required();
+
+export const OTP = Joi.string()
+  .length(6)
+  .pattern(/^\d+$/, "numbers");
+export const OTPREQ = OTP.required();
